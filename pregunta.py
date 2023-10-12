@@ -11,7 +11,7 @@ import pandas as pd
 
 def clean_data():
 
-    df = pd.read_csv("solicitudes_credito.csv", sep=";")
+    df = pd.read_csv(r"solicitudes_credito.csv", sep=";")
 
     #
     # Inserte su código aquí
@@ -27,7 +27,8 @@ def clean_data():
     df["monto_del_credito"] = df["monto_del_credito"].apply(lambda x: str(x).strip("$").strip().replace(".00", "").replace(",", ""))
     df["barrio"] = df["barrio"].apply(lambda x: str(x).replace("_"," ").replace("-"," "))
     df["línea_credito"] = df["línea_credito"].apply(lambda x: str(x).replace("-", " ").replace("_", " ").strip())
-    df["fecha_de_beneficio"] = pd.to_datetime(df["fecha_de_beneficio"], dayfirst=True, errors="coerce")
+
+    df['fecha_de_beneficio'] = pd.to_datetime(df['fecha_de_beneficio'], dayfirst=True, format='mixed')
     df.drop_duplicates(inplace=True)
 
     return df
